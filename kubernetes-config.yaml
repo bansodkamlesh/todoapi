@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: todoapp
-          image: bansodkamlesh/todoapp:1.0
+          image: bansodkamlesh/todoapp:1.BUILDNUMBER
           env:
             - name: MYSQL_HOST
               value: svc-db-clusterip.kamlesh.svc.cluster.local
