@@ -30,7 +30,7 @@ userRemoteConfigs: [[url: 'https://github.com/bansodkamlesh/todoapi.git']])
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'baf35048-740e-41da-ba40-748bbd7a298e', url: 'https://index.docker.io/v1/') {
-                        def imageTag = "bansodkamlesh/todoapi:1.${BUILD_N}"
+                        def imageTag = "bansodkamlesh/todoapp:1.${BUILD_N}"
                         docker.image(imageTag).push()
                         echo 'successful Push to Docker Hub'
                     }
@@ -39,7 +39,7 @@ userRemoteConfigs: [[url: 'https://github.com/bansodkamlesh/todoapi.git']])
         stage('Kubernetes Deployment'){
 			 steps {
                 script {
-                    sh 'sed -ie "s\\todoapi:1.BUILDNUMBER\\todoapi:1.${BUILD_N}\\g" kubernetes-config.yaml'
+                    sh 'sed -ie "s\\todoapp:1.BUILDNUMBER\\todoapp:1.${BUILD_N}\\g" kubernetes-config.yaml'
                    kubeconfig(credentialsId: 'bansodkamlesh', serverUrl: 'https://kubernetes.docker.internal:6443') {
                     def kubeConfig = readFile 'kubernetes-config.yaml'
                         sh "kubectl apply -f kubernetes-config.yaml"
